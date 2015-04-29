@@ -27,7 +27,7 @@
 
 	<section class="upload_wrap">
 		<header>
-			<a href="${cp}/"><h1>Spring 4.1.1 File upload example</h1></a>
+			<a href="${cp}/"><h1>PDF Convertor</h1></a>
 		</header>
 
 		<article class="http">
@@ -60,7 +60,7 @@
 		<%--</article>--%>
 
 		<footer>
-			Copyright &copy; Francis.kim. All right reserved.
+			Copyright &copy; Ziguang. All right reserved.
 		</footer>
 	</section>
 
