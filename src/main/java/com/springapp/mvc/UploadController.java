@@ -1,6 +1,7 @@
 package com.springapp.mvc;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -96,7 +97,7 @@ public class UploadController {
 				ti.setRowNum((int) (i / 2));
 				if (ps.length == 8) {
 				} else {
-					ti.setAddress(ps[6]);
+					ti.setAddress(formatAddress(ps[6]));
 					ti.setCode(ps[8]);
 				}
 				csvWriter.write(ti, header);
@@ -109,6 +110,34 @@ public class UploadController {
 		logger.debug("Upload success : " + upload);
 
 		return null;
+	}
+
+	private String formatAddress(String address) {
+		String[] splitRes = address.replace(":", "").split("\r\n");
+		List<String> splitRes1 = new ArrayList<String>();
+		for (int i = 0; i < splitRes.length; i++) {
+			String sp1 = splitRes[i];
+			boolean isOverlap = false;
+			for (int j = 0; j < splitRes1.size(); j++) {
+				String sp2 = splitRes1.get(j);
+				double similar = StringSimilarity.similarity(
+						sp1.replace(",", ""), sp2.replace(",", ""));
+				if (similar > 0.7) {
+					isOverlap = true;
+					if (sp1.length() > sp2.length()) {
+						splitRes1.set(j, sp1.trim());
+					}
+				}
+			}
+			if (!isOverlap)
+				splitRes1.add(sp1.trim());
+		}
+		String ret = "";
+		for (int i = 0; i < splitRes1.size(); i++) {
+			ret += splitRes1.get(i) + "\r\n";
+		}
+		ret = ret.trim();
+		return ret;
 	}
 
 	/*
