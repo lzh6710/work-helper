@@ -113,7 +113,8 @@ public class UploadController {
 	}
 
 	private String formatAddress(String address) {
-		String[] splitRes = address.replace(":", "").split("\r\n");
+		String lineSeparator = System.getProperty("line.separator", "\n");  
+		String[] splitRes = address.replace(":", "").split(lineSeparator);
 		List<String> splitRes1 = new ArrayList<String>();
 		for (int i = 0; i < splitRes.length; i++) {
 			String sp1 = splitRes[i];
@@ -134,7 +135,7 @@ public class UploadController {
 		}
 		String ret = "";
 		for (int i = 0; i < splitRes1.size(); i++) {
-			ret += splitRes1.get(i) + "\r\n";
+			ret += splitRes1.get(i) + lineSeparator;
 		}
 		ret = ret.trim();
 		return ret;
